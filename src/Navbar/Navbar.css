@@ -11,7 +11,7 @@
 .dropdown {
     position: relative;
     display: inline-block;
-    width: auto;
+    
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -42,3 +42,11 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropButton {background-color: #001440;}
+
+/* The Navbar holding all the dropdowns */
+.navbar {
+    width: 100vw;
+    display: block;
+	padding: 0;
+    background-color: #43464B;
+}
