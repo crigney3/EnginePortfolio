@@ -2,30 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ProjectTemplate from "./ProjectTemplate";
 
-// class DefaultProjects extends React.Component {
-//     constructor(props) {
-//         super(props);
-//     }
-
-//     render() {
-
-
-//         return (
-//             <div className="allDefaultProjects">
-//                 <ProjectTemplate />
-//             </div>
-//         )
-//     }
-// }
-
 class SHOEProject extends ProjectTemplate {
     constructor(props) {
         super(props);
 
         this.state.title = "SHOE";
         this.state.description = "It's the Sorta Helpful Open Engine!";
-        this.state.backgroundColor = null;
-        this.state.fontColor = null;
+        this.state.theme = 'red';
+        this.state.fontColor = 'font-white';
         this.state.video = null;
         this.state.image = null;
         this.state.shortDescription = null;
@@ -39,7 +23,7 @@ class MinecraftCharityStream extends ProjectTemplate {
         
         this.state.title = "The Minecraft Charity Stream";
         this.state.description = null;
-        this.state.backgroundColor = null;
+        this.state.theme = null;
         this.state.fontColor = null;
         this.state.video = null;
         this.state.image = null;
@@ -54,7 +38,7 @@ class UnrealLIDAR extends ProjectTemplate {
         
         this.state.title = "Unreal LIDAR";
         this.state.description = null;
-        this.state.backgroundColor = null;
+        this.state.theme = null;
         this.state.fontColor = null;
         this.state.video = null;
         this.state.image = null;
@@ -69,7 +53,7 @@ class ThisWebsite extends ProjectTemplate {
         
         this.state.title = "This Website";
         this.state.description = null;
-        this.state.backgroundColor = null;
+        this.state.theme = null;
         this.state.fontColor = null;
         this.state.video = null;
         this.state.image = null;
@@ -84,14 +68,3 @@ export {
     UnrealLIDAR,
     ThisWebsite
 }
-
-// export function SHOEProject() {
-//     let SHOETemplate = new ProjectTemplate();
-
-//     SHOETemplate.setState({title: "SHOE"});
-//     SHOETemplate.setState({description: "It's the Sorta Helpful Open Engine!"});
-
-//     return (
-//         SHOETemplate
-//     );
-// }

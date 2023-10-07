@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 
 class ProjectTemplate extends React.Component {
@@ -8,7 +8,7 @@ class ProjectTemplate extends React.Component {
             title: null,
             description: null,
             shortDescription: null,
-            backgroundColor: null,
+            theme: null,
             fontColor: null,
             image: null,
             video: null,
@@ -19,25 +19,27 @@ class ProjectTemplate extends React.Component {
     render() {
         return (
           <div className="project">
-            {(this.state.title !== null) &&
-            <h1 className="title">{this.state.title}</h1>
-            }
-
-            {(this.state.image !== null) &&
-            <img src={this.state.image} alt={this.state.shortDescription} className="image"/>
-            }
-
-            {(this.state.description !== null) &&
-            <p className="fullDescription">{this.state.description}</p>
-            }
-
-            {(this.state.coauthors !== null) &&
-            <p className="coAuthors">{this.state.coauthors}</p>
-            }
-
-            {(this.state.video !== null) &&
-            <video className="video"><source src={this.state.video} /></video>
-            }
+            <div id='backgroundArea' className={this.state.theme}>
+              {(this.state.title !== null) &&
+              <h1 id="title" className={this.state.fontColor}>{this.state.title}</h1>
+              }
+  
+              {(this.state.image !== null) &&
+              <img src={this.state.image} alt={this.state.shortDescription} className="image"/>
+              }
+  
+              {(this.state.description !== null) &&
+              <p id="fullDescription" className={this.state.fontColor}>{this.state.description}</p>
+              }
+  
+              {(this.state.coauthors !== null) &&
+              <p id="coAuthors" className={this.state.fontColor}>{this.state.coauthors}</p>
+              }
+  
+              {(this.state.video !== null) &&
+              <video className="video"><source src={this.state.video} /></video>
+              }
+            </div>
           </div>
         )
     }
