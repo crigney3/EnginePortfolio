@@ -1,0 +1,84 @@
+/* Values for all Windows */
+.windowTemplate {
+    background-color: #1F2022;
+}
+
+/* Top Window bar */
+.topWindowBar {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+/* Close Window button container */
+.closeWindow {
+    color: black;
+    padding: 8px 4px;
+    min-width: 160px;
+    display: block;
+}
+
+/* Close Window button */
+.closeWindowButton {
+    color: black;
+    padding: 8px 4px;
+    min-width: 160px;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+}
+
+.Window {
+    /* The position can be set by the parent, allowing movement */
+    position: absolute;
+    /* Keeping a min on sizes allows scaling without conflict */
+    min-width: 250px;
+    min-height: 250px;
+    overflow: hidden;
+
+    .Window-titlebar {
+        width: 100%;
+        padding: 0 2px;
+        /* Specific height means the titlebar height never changes */
+        height: 24px;
+        display: grid;
+        grid-template-columns: 24px 1fr 24px;
+        align-items: center;
+        cursor: default;
+        
+
+        .Window-titlebar-icon, .Window-titlebar-control {
+            width: 16px;
+            height: 16px;
+            margin: 4px;
+        }
+
+        .Window-titlebar-text {
+            font-weight: normal;
+        }
+
+        .Window-titlebar-control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+
+    .Window-content {
+        overflow-y: auto;
+        overflow-x: hidden;
+        background-color: white;
+        width: 100%;
+        height: calc(100% - 24px);
+        padding: 5px;
+        padding-bottom: 0;
+        border-color: rgba(17, 17, 17, 0.75) rgba(255, 255, 255, 0.75) rgba(255, 255, 255, 0.75) rgba(17, 17, 17, 0.75);
+        border-style: inset;
+        border-width: 2px;
+    }
+}
+
+/* Only needed if the Resume is a pdf */
+.Resume {
+    overflow-y: hidden !important;
+}

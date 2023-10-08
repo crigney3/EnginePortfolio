@@ -2,7 +2,7 @@
     useState, useEffect, useRef, useContext,
   } from 'react';
   import propTypes from 'prop-types';
-  import './Window.css';
+  import './Window.scss';
   import { isMobile } from 'react-device-detect';
   //import { folderIcon } from '../assets/images';
   import WindowControlContext from './WindowControlContext';
@@ -19,19 +19,19 @@
     const WindowControl = useContext(WindowControlContext);
   
     const [transform, setTransform] = useState({
-      x: (WindowControl.desktopTransform.w / 2)
-      - (Math.min(initialTransform.w, WindowControl.desktopTransform.w - 25) / 2),
-      y: (WindowControl.desktopTransform.h / 2)
-      - (Math.min(initialTransform.h, WindowControl.desktopTransform.h - 61) / 2),
+      x: (WindowControl.engineTransform.w / 2)
+      - (Math.min(initialTransform.w, WindowControl.engineTransform.w - 25) / 2),
+      y: (WindowControl.engineTransform.h / 2)
+      - (Math.min(initialTransform.h, WindowControl.engineTransform.h - 61) / 2),
       ...WindowControl.getNewWindowPosition(),
       ...initialTransform,
-      w: Math.min(initialTransform.w, WindowControl.desktopTransform.w - 25),
-      h: Math.min(initialTransform.h, WindowControl.desktopTransform.h - 61),
+      w: Math.min(initialTransform.w, WindowControl.engineTransform.w - 25),
+      h: Math.min(initialTransform.h, WindowControl.engineTransform.h - 61),
     });
     const transformRef = useRef(transform);
     const [events, setEvents] = useState({ drag: false, resizeX: false, resizeY: false });
     const eventsRef = useRef(events);
-    const desktopTransformRef = useRef(WindowControl.desktopTransform);
+    const engineTransformRef = useRef(WindowControl.engineTransform);
   
     const windowRef = useRef(null);
     const titlebarRef = useRef(null);
@@ -40,13 +40,13 @@
       const newTransform = { ...transformVal };
       if (transformVal.x < 0) {
         newTransform.x = 0;
-      } else if (transformVal.x + transformVal.w > desktopTransformRef.current.w) {
-        newTransform.x = desktopTransformRef.current.w - transformVal.w;
+      } else if (transformVal.x + transformVal.w > engineTransformRef.current.w) {
+        newTransform.x = engineTransformRef.current.w - transformVal.w;
       }
       if (transformVal.y < 0) {
         newTransform.y = 0;
-      } else if (transformVal.y + transformVal.h > desktopTransformRef.current.h) {
-        newTransform.y = desktopTransformRef.current.h - transformVal.h;
+      } else if (transformVal.y + transformVal.h > engineTransformRef.current.h) {
+        newTransform.y = engineTransformRef.current.h - transformVal.h;
       }
       return newTransform;
     };
@@ -64,8 +64,8 @@
     }, [WindowControl.activeWindow]);
   
     useEffect(() => {
-      desktopTransformRef.current = WindowControl.desktopTransform;
-    }, [WindowControl.desktopTransform]);
+      engineTransformRef.current = WindowControl.engineTransform;
+    }, [WindowControl.engineTransform]);
   
     useEffect(() => {
       if (index === WindowControl.activeWindow) {
@@ -73,7 +73,7 @@
       }
   
       let prevPosition = null;
-      let windowSize = { w: WindowControl.desktopTransform.w, h: WindowControl.desktopTransform.h };
+      let windowSize = { w: WindowControl.engineTransform.w, h: WindowControl.engineTransform.h };
   
       const handleTitlebarMouseDown = (e) => {
         const event = 'targetTouches' in e ? e.targetTouches[0] : e;
@@ -165,10 +165,10 @@
   
       const handleResize = () => {
         const delta = {
-          x: desktopTransformRef.current.w - windowSize.w,
-          y: desktopTransformRef.current.h - windowSize.h,
+          x: engineTransformRef.current.w - windowSize.w,
+          y: engineTransformRef.current.h - windowSize.h,
         };
-        windowSize = { w: desktopTransformRef.current.w, h: desktopTransformRef.current.h };
+        windowSize = { w: engineTransformRef.current.w, h: engineTransformRef.current.h };
         transformRef.current = {
           ...transformRef.current,
           x: transformRef.current.x + (delta.x / 2),
@@ -225,7 +225,7 @@
         <div
           className="Window-titlebar"
           style={index === WindowControl.activeWindow
-            ? { backgroundColor: WindowControl.theme.titlebar, color: WindowControl.theme.font }
+            ? { backgroundColor: 'red', color: 'blue' }
             : { backgroundColor: 'gray', color: 'darkgray' }}
           ref={titlebarRef}
         >

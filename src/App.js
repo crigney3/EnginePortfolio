@@ -1,21 +1,41 @@
 import logo from './logo.svg';
-import './App.css';
-import { SHOEProject, ThisWebsite, MinecraftCharityStream, UnrealLIDAR } from './data/DefaultProjects';
-import Navbar from './Navbar/Navbar';
+import './reset.css';
+import './App.scss';
 import Engine from './Engine/Engine';
+import { SHOEProject, ThisWebsite, MinecraftCharityStream, UnrealLIDAR } from './data/DefaultProjects';
+import React, { useEffect, useState } from 'react';
+import Navbar from './Navbar/Navbar';
 
-function App() {
+const App = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  const [appHeight, setAppHeight] = useState(document.querySelector('html').offsetHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setAppHeight(document.querySelector('html').offsetHeight);
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.querySelector('#root').style.height = `${appHeight}px`;
+  }, [appHeight]);
+
   return (
-    <div className="App">
+    <>
       <Navbar />
-      <Engine />
-      <SHOEProject />
-      <ThisWebsite />
-      <MinecraftCharityStream />
-      <UnrealLIDAR />
-    </div>
+      <Engine width={windowWidth} height={windowHeight} />
+    </>    
   );
-
-}
+};
 
 export default App;

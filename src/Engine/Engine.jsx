@@ -3,10 +3,11 @@ import React, {
     useState, useEffect, useRef, cloneElement, useMemo,
 } from 'react';
 import propTypes from 'prop-types';
-import './Engine.css';
+import './Engine.scss';
 import { isMobile } from 'react-device-detect';
 import Window from '../Window/Window.jsx';
 import WindowControlContext from '../Window/WindowControlContext';
+import { SHOEProject } from '../data/DefaultProjects';
 
 const Engine = ({
     width,
@@ -176,7 +177,7 @@ const Engine = ({
               key="colorado_042022.png"
               index={-1}
             >
-              <img src={null} alt="me waving hello. hello!" />
+              <SHOEProject />
             </Window>,
             <Window
               windowName="Landing"
@@ -218,7 +219,9 @@ const Engine = ({
           //theme,
         }), [activeWindow, width, height])}
         >
-            <main ref={engineRef}>ah</main>
+            <main ref={engineRef} className="Engine">
+              {openWindows.map((windowElem, index) => cloneElement(windowElem, { index }))}
+            </main>
             
           {/* <main className="Desktop" style={{ backgroundImage: `url(${charlie})` }} ref={engineRef}>
             {openWindows.map((windowElem, index) => cloneElement(windowElem, { index }))}
