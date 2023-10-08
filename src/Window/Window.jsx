@@ -6,7 +6,6 @@
   import { isMobile } from 'react-device-detect';
   //import { folderIcon } from '../assets/images';
   import WindowControlContext from './WindowControlContext';
-  import TopWindowBar from './TopWindowBar';
   
   const Window = ({
     windowName,

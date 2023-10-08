@@ -5,9 +5,8 @@ import React, {
 import propTypes from 'prop-types';
 import './Engine.css';
 import { isMobile } from 'react-device-detect';
-import {
-    Window, WindowControlContext,
-} from '../Window';
+import Window from '../Window/Window.jsx';
+import WindowControlContext from '../Window/WindowControlContext';
 
 const Engine = ({
     width,
@@ -122,6 +121,147 @@ const Engine = ({
     useEffect(() => {
         activeWindowPositionRef.current = activeWindowPosition;
     }, [activeWindowPosition]);
+
+    // This hook updates all the states at the base level of the Engine component
+    useEffect(() => {
+        // Set some initial transform values before dealing with resizing and mobile
+        let landingInitialTransform = {
+          w: 500,
+          h: 250,
+          x: (width / 2) - 450,
+          y: (height / 2) - 100,
+        };
+        let imageInitialTransform = {
+          w: 300,
+          h: 355,
+          x: (width / 2) + 70,
+          y: (height / 2) - 175,
+        };
+    
+        // Change those initial transforms for mobile depending on vertical vs. horizontal    
+        if (isMobile && width < height) {
+            landingInitialTransform = {
+            ...landingInitialTransform,
+            x: 12.5,
+            y: (height / 2) - 300,
+            };
+            imageInitialTransform = {
+            ...imageInitialTransform,
+            x: (width / 2) - 150,
+            y: (height / 2) - 25,
+            };
+        } else if (isMobile) {
+            landingInitialTransform = {
+            ...landingInitialTransform,
+            x: 12.5,
+            y: (height / 2) - (Math.min(height - 25, 250) / 2),
+            };
+            imageInitialTransform = {
+            ...imageInitialTransform,
+            x: (width / 2) + 100,
+            y: (height / 2) - (Math.min(height - 25, 355) / 2),
+            };
+        }
+    
+        // What windows should exist and be open by default?
+        setOpenWindows([
+            <Window
+              windowName="colorado_042022.png"
+              className="Landing"
+              id="colorado_042022.png"
+              handleWindowClose={handleWindowClose}
+              handleFocus={handleFocus}
+              initialTransform={imageInitialTransform}
+              iconSrc={null}
+              key="colorado_042022.png"
+              index={-1}
+            >
+              <img src={null} alt="me waving hello. hello!" />
+            </Window>,
+            <Window
+              windowName="Landing"
+              className="Landing"
+              id="Landing"
+              handleWindowClose={handleWindowClose}
+              handleFocus={handleFocus}
+              initialTransform={landingInitialTransform}
+              iconSrc={null}
+              key="Landing"
+              index={-1}
+            >
+              <p>hi</p>
+            </Window>,
+          ]);
+      
+          if (!isMobile) {
+            engineRef.current.addEventListener('mousedown', handleDefocus);
+          } else {
+            engineRef.current.addEventListener('touchstart', handleDefocus);
+          }
+      
+          return () => {
+            if (engineRef.current) engineRef.current.removeEventListener('mousedown', handleDefocus);
+          };
+    }, []);
+
+    // Finally, return the actual HTML
+    return (
+        <WindowControlContext.Provider value={useMemo(() => ({
+          handleWindowOpen,
+          handleWindowClose,
+          handleFocus,
+          getZIndex,
+          getNewWindowPosition,
+          setActiveWindowPosition,
+          activeWindow,
+          engineTransform: { w: width, h: height },
+          //theme,
+        }), [activeWindow, width, height])}
+        >
+            <main ref={engineRef}>ah</main>
+            
+          {/* <main className="Desktop" style={{ backgroundImage: `url(${charlie})` }} ref={engineRef}>
+            {openWindows.map((windowElem, index) => cloneElement(windowElem, { index }))}
+            <IconGrid icons={desktopIcons} />
+          </main>
+          <footer className="haos-border Taskbar">
+            {isMainMenuOpen && (
+            <span className="haos-border Taskbar-menu">
+              <div>
+                <button
+                  type="button"
+                  className="haos-border haos-button"
+                  onClick={() => setMainMenu(<ThemeMenu theme={theme} setTheme={setTheme} />)}
+                >
+                  Change Theme
+                </button>
+              </div>
+              <div className="Taskbar-menu-content">{mainMenu}</div>
+            </span>
+            )}
+            <button type="button" className="haos-border haos-button Taskbar-button" onClick={() => setMainMenuOpen(!isMainMenuOpen)}>
+              <img src={haos} alt="icon for HAOS" />
+              haOS
+            </button>
+            <span className="Taskbar-windows">
+              {openWindows.map((windowElem, index) => (
+                <button
+                  type="button"
+                  className={`haos-border haos-button Taskbar-button ${index === activeWindow ? 'active' : ''}`}
+                  onClick={() => setActiveWindow(index)}
+                  key={`Taskbar-${windowElem.props.windowName}`}
+                >
+                  <img src={windowElem.props.iconSrc} alt={`icon for ${windowElem.props.windowName}`} />
+                  <p>{windowElem.props.windowName}</p>
+                </button>
+              ))}
+            </span>
+            <span className="Taskbar-controls">
+              <Clock />
+            </span>
+          </footer> */}
+        </WindowControlContext.Provider>
+    );
 };
 
 export default Engine;

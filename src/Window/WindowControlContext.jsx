@@ -1,7 +1,6 @@
 import { createContext } from 'react';
 
-const WindowController = createContext({
-  iconMap: () => {},
+const WindowControlContext = createContext({
   handleWindowOpen: () => {},
   handleWindowClose: () => {},
   handleFocus: () => {},
@@ -9,8 +8,8 @@ const WindowController = createContext({
   getNewWindowPosition: () => {},
   setActiveWindowPosition: () => {},
   activeWindow: -1,
-  desktopTransform: {},
-  theme: {},
+  engineTransform: {},
+  //theme: {},
 });
 
-export default WindowController;
+export default WindowControlContext;
