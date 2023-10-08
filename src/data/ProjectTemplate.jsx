@@ -1,48 +1,76 @@
-import React, { useState } from 'react';
+import React, {
+  useState, useEffect, useRef, cloneElement, useMemo,
+} from 'react';
+import propTypes from 'prop-types';
 import ReactDOM from 'react-dom/client';
 
-class ProjectTemplate extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: null,
-            description: null,
-            shortDescription: null,
-            theme: null,
-            fontColor: null,
-            image: null,
-            video: null,
-            coauthors: null
+const ProjectTemplate = ({
+  initialTitle,
+  initialDescription,
+  initialShortDescription,
+  initialTheme,
+  initialFontColor,
+  initialImage,
+  initialVideo,
+  initialCoauthors
+}) => {
+
+  const [title, setTitle] = useState(initialTitle);
+  const [description, setDescription] = useState(initialDescription);
+  const [shortDescription, setShortDescription] = useState(initialShortDescription);
+  const [theme, setTheme] = useState(initialTheme);
+  const [fontColor, setFontColor] = useState(initialFontColor);
+  const [image, setImage] = useState(initialImage);
+  const [video, setVideo] = useState(initialVideo);
+  const [coauthors, setCoauthors] = useState(initialCoauthors);
+
+  return (
+    <div className="project">
+      <div id='backgroundArea' className={theme}>
+        {(title !== null) &&
+        <h1 id="title" className={fontColor}>{title}</h1>
         }
-    }
-    
-    render() {
-        return (
-          <div className="project">
-            <div id='backgroundArea' className={this.state.theme}>
-              {(this.state.title !== null) &&
-              <h1 id="title" className={this.state.fontColor}>{this.state.title}</h1>
-              }
-  
-              {(this.state.image !== null) &&
-              <img src={this.state.image} alt={this.state.shortDescription} className="image"/>
-              }
-  
-              {(this.state.description !== null) &&
-              <p id="fullDescription" className={this.state.fontColor}>{this.state.description}</p>
-              }
-  
-              {(this.state.coauthors !== null) &&
-              <p id="coAuthors" className={this.state.fontColor}>{this.state.coauthors}</p>
-              }
-  
-              {(this.state.video !== null) &&
-              <video className="video"><source src={this.state.video} /></video>
-              }
-            </div>
-          </div>
-        )
-    }
+
+        {(image !== null) &&
+        <img src={image} alt={shortDescription} className="image"/>
+        }
+
+        {(description !== null) &&
+        <p id="fullDescription" className={fontColor}>{description}</p>
+        }
+
+        {(coauthors !== null) &&
+        <p id="coAuthors" className={fontColor}>{coauthors}</p>
+        }
+
+        {(video !== null) &&
+        <video className="video"><source src={video} /></video>
+        }
+      </div>
+    </div>
+  );
 }
+
+ProjectTemplate.propTypes = {
+  title: propTypes.string,
+  description: propTypes.string,
+  shortDescription: propTypes.string,
+  theme: propTypes.string,
+  fontColor: propTypes.string,
+  image: propTypes.string,
+  video: propTypes.string,
+  coauthors: propTypes.string
+};
+
+ProjectTemplate.defaultProps = {
+  title: null,
+  description: null,
+  shortDescription: null,
+  theme: null,
+  fontColor: null,
+  image: null,
+  video: null,
+  coauthors: null
+};
 
 export default ProjectTemplate;

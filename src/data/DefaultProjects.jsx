@@ -1,70 +1,71 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ProjectTemplate from "./ProjectTemplate";
+import projectData from './ProjectData.json';
 
-class SHOEProject extends ProjectTemplate {
-    constructor(props) {
-        super(props);
-
-        this.state.title = "SHOE";
-        this.state.description = "It's the Sorta Helpful Open Engine!";
-        this.state.theme = 'red';
-        this.state.fontColor = 'font-white';
-        this.state.video = null;
-        this.state.image = null;
-        this.state.shortDescription = null;
-        this.state.coauthors = null;
-    }
+const SHOEProject = ({}) => {
+    return(
+        <ProjectTemplate 
+        initialTitle={projectData["projects"][0].title}
+        initialDescription={projectData["projects"][0].description}
+        initialShortDescription={projectData["projects"][0].shortDescription}
+        initialCoauthors={projectData["projects"][0].coAuthors}
+        initialImage={projectData["projects"][0].image}
+        initialVideo={projectData["projects"][0].video}
+        initialTheme={projectData["projects"][0].theme}
+        initialFontColor={projectData["projects"][0].fontColor}
+        />
+    )
 }
 
-class MinecraftCharityStream extends ProjectTemplate {
-    constructor(props) {
-        super(props);
-        
-        this.state.title = "The Minecraft Charity Stream";
-        this.state.description = null;
-        this.state.theme = null;
-        this.state.fontColor = null;
-        this.state.video = null;
-        this.state.image = null;
-        this.state.shortDescription = null;
-        this.state.coauthors = null;
-    }
+const MCSProject = ({}) => {
+    return(
+        <ProjectTemplate 
+        initialTitle={projectData["projects"][1].title}
+        initialDescription={projectData["projects"][1].description}
+        initialShortDescription={projectData["projects"][1].shortDescription}
+        initialCoauthors={projectData["projects"][1].coAuthors}
+        initialImage={projectData["projects"][1].image}
+        initialVideo={projectData["projects"][1].video}
+        initialTheme={projectData["projects"][1].theme}
+        initialFontColor={projectData["projects"][1].fontColor}
+        />
+    )
 }
 
-class UnrealLIDAR extends ProjectTemplate {
-    constructor(props) {
-        super(props);
-        
-        this.state.title = "Unreal LIDAR";
-        this.state.description = null;
-        this.state.theme = null;
-        this.state.fontColor = null;
-        this.state.video = null;
-        this.state.image = null;
-        this.state.shortDescription = null;
-        this.state.coauthors = null;
-    }
+const UnrealLIDARProject = ({}) => {
+    return(
+        <ProjectTemplate 
+        initialTitle={projectData["projects"][2].title}
+        initialDescription={projectData["projects"][2].description}
+        initialShortDescription={projectData["projects"][2].shortDescription}
+        initialCoauthors={projectData["projects"][2].coAuthors}
+        initialImage={projectData["projects"][2].image}
+        initialVideo={projectData["projects"][2].video}
+        initialTheme={projectData["projects"][2].theme}
+        initialFontColor={projectData["projects"][2].fontColor}
+        />
+    )
 }
 
-class ThisWebsite extends ProjectTemplate {
-    constructor(props) {
-        super(props);
-        
-        this.state.title = "This Website";
-        this.state.description = null;
-        this.state.theme = null;
-        this.state.fontColor = null;
-        this.state.video = null;
-        this.state.image = null;
-        this.state.shortDescription = null;
-        this.state.coauthors = null;
-    }
+const ThisWebsiteProject = ({}) => {
+    return(
+        <ProjectTemplate 
+        initialTitle={projectData["projects"][3].title}
+        initialDescription={projectData["projects"][3].description}
+        initialShortDescription={projectData["projects"][3].shortDescription}
+        initialCoauthors={projectData["projects"][3].coAuthors}
+        initialImage={projectData["projects"][3].image}
+        initialVideo={projectData["projects"][3].video}
+        initialTheme={projectData["projects"][3].theme}
+        initialFontColor={projectData["projects"][3].fontColor}
+        />
+    )
 }
 
 export {
     SHOEProject,
-    MinecraftCharityStream,
-    UnrealLIDAR,
-    ThisWebsite
+    MCSProject,
+    UnrealLIDARProject,
+    ThisWebsiteProject
 }

@@ -1,0 +1,44 @@
+{
+    "projects": [
+      {
+        "title": "SHOE",
+        "description": "A game/rendering engine capable of modern graphics using DX11. Currently being upgraded to also use DX12!",
+        "shortDescription": "The Sorta Helpful Open Engine",
+        "fontColor": "font-white",
+        "video": "",
+        "image": "",
+        "coAuthors": "",
+        "theme": "red"
+      },
+      {
+        "title": "The Minecraft Charity Stream",
+        "description": "Charity Stream!",
+        "shortDescription": "",
+        "fontColor": "",
+        "video": "",
+        "image": "",
+        "coAuthors": "",
+        "theme": ""
+      },
+      {
+        "title": "Unreal LIDAR",
+        "description": "",
+        "shortDescription": "",
+        "fontColor": "",
+        "video": "",
+        "image": "",
+        "coAuthors": "",
+        "theme": ""
+      },
+      {
+        "title": "This Website",
+        "description": "",
+        "shortDescription": "",
+        "fontColor": "",
+        "video": "",
+        "image": "",
+        "coAuthors": "",
+        "theme": ""
+      }
+    ]
+  }

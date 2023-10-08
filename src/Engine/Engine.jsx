@@ -7,7 +7,7 @@ import './Engine.scss';
 import { isMobile } from 'react-device-detect';
 import Window from '../Window/Window.jsx';
 import WindowControlContext from '../Window/WindowControlContext';
-import { SHOEProject } from '../data/DefaultProjects';
+import { SHOEProject, MCSProject, UnrealLIDARProject, ThisWebsiteProject } from '../data/DefaultProjects';
 
 const Engine = ({
     width,
@@ -166,19 +166,45 @@ const Engine = ({
     
         // What windows should exist and be open by default?
         setOpenWindows([
-            <Window
-              windowName="colorado_042022.png"
-              className="Landing"
-              id="colorado_042022.png"
-              handleWindowClose={handleWindowClose}
-              handleFocus={handleFocus}
-              initialTransform={imageInitialTransform}
-              iconSrc={null}
-              key="colorado_042022.png"
-              index={-1}
-            >
-              <SHOEProject />
-            </Window>,
+              <Window
+                windowName="DetailsPanel"
+                className="Landing"
+                id="DetailsPanel"
+                handleWindowClose={handleWindowClose}
+                handleFocus={handleFocus}
+                initialTransform={imageInitialTransform}
+                iconSrc={null}
+                key="DetailsPanel"
+                index={-1}
+              > 
+                <MCSProject />
+              </Window>, 
+              <Window
+                windowName="SHOE-Project-Window"
+                className="Landing"
+                id="SHOE-Project-Window"
+                handleWindowClose={handleWindowClose}
+                handleFocus={handleFocus}
+                initialTransform={imageInitialTransform}
+                iconSrc={null}
+                key="SHOE-Project-Window"
+                index={-1}
+              >
+                <SHOEProject />
+              </Window>,
+              <Window
+                windowName="MCS-Project-Window"
+                className="Landing"
+                id="MCS-Project-Window"
+                handleWindowClose={handleWindowClose}
+                handleFocus={handleFocus}
+                initialTransform={imageInitialTransform}
+                iconSrc={null}
+                key="MCS-Project-Window"
+                index={-1}
+              > 
+              <MCSProject />
+            </Window>,            
             <Window
               windowName="Landing"
               className="Landing"
