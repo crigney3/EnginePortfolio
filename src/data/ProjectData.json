@@ -5,9 +5,17 @@
         "description": "A game/rendering engine capable of modern graphics using DX11. Currently being upgraded to also use DX12!",
         "shortDescription": "The Sorta Helpful Open Engine",
         "fontColor": "font-white",
-        "video": "",
-        "image": "",
-        "coAuthors": "",
+        "video": {
+            "src": "",
+            "name": ""
+        },
+        "images": [
+            {
+                "src": "",
+                "name": "SHOE main screenshot"
+            }
+        ],
+        "coauthors": "",
         "theme": "red"
       },
       {
@@ -15,29 +23,73 @@
         "description": "Charity Stream!",
         "shortDescription": "",
         "fontColor": "",
-        "video": "",
-        "image": "",
-        "coAuthors": "",
+        "video": {
+            "src": "",
+            "name": ""
+        },
+        "images": [
+            {
+                "src": "",
+                "name": "The Minecraft Charity Stream Homepage"
+            },
+            {
+                "src": "",
+                "name": "The Minecraft Charity Stream Viewing Page"
+            },
+            {
+                "src": "",
+                "name": "The Minecraft Charity Stream Store Page"
+            },
+            {
+                "src": "",
+                "name": "streamermoment.png"
+            }
+        ],
+        "coauthors": "",
         "theme": ""
       },
       {
         "title": "Unreal LIDAR",
-        "description": "",
+        "description": "Lasers!",
         "shortDescription": "",
         "fontColor": "",
-        "video": "",
-        "image": "",
-        "coAuthors": "",
+        "video": {
+            "src": "",
+            "name": ""
+        },
+        "images": [
+            {
+                "src": "",
+                "name": "LIDAR Active - Unlit"
+            },
+            {
+                "src": "",
+                "name": "LIDAR Active - Lit"
+            }
+        ],
+        "coauthors": "",
         "theme": ""
       },
       {
         "title": "This Website",
-        "description": "",
+        "description": "Very meta, I know.",
         "shortDescription": "",
         "fontColor": "",
-        "video": "",
-        "image": "",
-        "coAuthors": "",
+        "video": {
+            "src": "",
+            "name": ""
+        },
+        "images": [
+            {
+                "src": "",
+                "name": "The homepage of this website"
+            },
+            {
+                "src": "",
+                "name": "What, you want more screenshots of the site you're already on?"
+            }
+        ],
+        "coauthors": "You, technically!",
         "theme": ""
       }
     ]

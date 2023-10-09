@@ -117,12 +117,45 @@
         const delta = { x: event.clientX - prevPosition.x, y: event.clientY - prevPosition.y };
         prevPosition = { x: event.clientX, y: event.clientY };
         if (eventsRef.current.drag) {
-          if (event.clientX !== 0 && event.clientY !== 0) {
+          if (event.clientX !== 0 && event.clientY !== 0 ) {
             transformRef.current = {
               ...transformRef.current,
               x: transformRef.current.x + delta.x,
               y: transformRef.current.y + delta.y,
             };
+
+            if (transformRef.current.y <= 0) {
+              transformRef.current = {
+                ...transformRef.current,
+                x: transformRef.current.x,
+                y: 0,
+              };
+            }
+
+            if (transformRef.current.x <= 0) {
+              transformRef.current = {
+                ...transformRef.current,
+                x: 0,
+                y: transformRef.current.y,
+              };
+            }
+
+            if (transformRef.current.x >= (WindowControl.engineTransform.width - transformRef.width)) {
+              transformRef.current = {
+                ...transformRef.current,
+                x: (WindowControl.engineTransform.width - transformRef.width),
+                y: transformRef.current.y,
+              };
+            }
+
+            if (transformRef.current.y >= (WindowControl.engineTransform.height - transformRef.height)) {
+              transformRef.current = {
+                ...transformRef.current,
+                x: transformRef.current.x,
+                y: (WindowControl.engineTransform.height - transformRef.height),
+              };
+            }
+
             setTransform(transformRef.current);
           }
         } else if (eventsRef.current.resizeX || eventsRef.current.resizeY) {

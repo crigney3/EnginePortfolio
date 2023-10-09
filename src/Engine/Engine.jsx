@@ -8,6 +8,7 @@ import { isMobile } from 'react-device-detect';
 import Window from '../Window/Window.jsx';
 import WindowControlContext from '../Window/WindowControlContext';
 import { SHOEProject, MCSProject, UnrealLIDARProject, ThisWebsiteProject } from '../data/DefaultProjects';
+import DetailsWindow from '../Window/EditorWindows/DetailsWindow';
 
 const Engine = ({
     width,
@@ -168,7 +169,7 @@ const Engine = ({
         setOpenWindows([
               <Window
                 windowName="DetailsPanel"
-                className="Landing"
+                className="DetailsPanel"
                 id="DetailsPanel"
                 handleWindowClose={handleWindowClose}
                 handleFocus={handleFocus}
@@ -177,7 +178,7 @@ const Engine = ({
                 key="DetailsPanel"
                 index={-1}
               > 
-                <MCSProject />
+                <DetailsWindow />
               </Window>, 
               <Window
                 windowName="SHOE-Project-Window"
