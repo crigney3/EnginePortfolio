@@ -4,7 +4,7 @@ import React, {
 import propTypes from 'prop-types';
 import projectData from '../../data/ProjectData.json'
 import Select from 'react-select';
-import Creatable from 'react-select/creatable';
+import CreatableSelect from 'react-select/creatable';
 
 const DetailsWindow = ({}) => {
 
@@ -18,12 +18,17 @@ const DetailsWindow = ({}) => {
     const [coauthorsArray, setCoauthorsArray] = useState(["null"]);
     const [videoArray, setVideoArray] = useState(["null"]);
 
+    const [currentTitle, setCurrentTitle] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
+
     const getTitlesFromData = () => {
         const newTitlesArray = projectData["projects"].map((project) => {
             return { value: project["title"] };
         });
 
         setTitlesArray(newTitlesArray);
+        setCurrentTitle(newTitlesArray[0]);
     }
 
     const getDescriptionsFromData = () => {
@@ -87,6 +92,21 @@ const DetailsWindow = ({}) => {
         setCoauthorsArray(flattenedCoauthorsArray);
     }
 
+    const createTextOnlyOption = (label) => ({
+        label,
+        value: label.toLowerCase().replace(/\W/g, ''),
+      });
+
+    const handleTitleCreate = (inputValue) => {
+        setIsLoading(true);
+        setTimeout(() => {
+            const newOption = createTextOnlyOption(inputValue);
+            setIsLoading(false);
+            setTitlesArray((prev) => [...prev, newOption]);
+            setCurrentTitle(newOption);
+        }, 1000);
+    }
+
     useMemo(() => { 
         getTitlesFromData();
         getDescriptionsFromData();
@@ -102,11 +122,17 @@ const DetailsWindow = ({}) => {
             <h1>Object Details</h1>
             <div className='EditingElements'>
                 <label>Current title:</label>
-                <Select
+                <CreatableSelect
+                    isClearable
                     defaultValue={titlesArray[0]}
                     className='titlesSelector'
                     name='editorTitles'
                     options={titlesArray}
+                    isDisabled={isLoading}
+                    isLoading={isLoading}
+                    onCreateOption={handleTitleCreate}
+                    value={currentTitle}
+                    onChange={(newValue) => setCurrentTitle(newValue)}
                     formatOptionLabel={titleObj => (
                         (titleObj.value !== "") &&
                         <div className="titleOption">
