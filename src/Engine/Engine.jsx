@@ -21,6 +21,13 @@ const Engine = ({
     // Track which window should be in focus
     const [activeWindow, setActiveWindow] = useState(0);
     const activeWindowRef = useRef(activeWindow);
+
+    // "Objects" are also windows, but they are ones that can be edited (projects, info, hobbies etc.)
+    // We need to hold the active object info here so it can be set on window rightclick and
+    // then passed down to non-object windows that can edit the active object.
+    const [activeObject, setActiveObject] = useState(0);
+    const activeObjectRef = useRef(activeObject);
+
     const [activeWindowPosition, setActiveWindowPosition] = useState({
       x: width / 2,
       y: height / 2,
@@ -106,6 +113,7 @@ const Engine = ({
           setWindowStack([...windowStackRef.current]);
         } else {
           setActiveWindow(null);
+          setActiveObject(null);
           setWindowStack([]);
         }
         openWindowsRef.current = openWindows;
@@ -134,8 +142,8 @@ const Engine = ({
           y: (height / 2) - 100,
         };
         let imageInitialTransform = {
-          w: 300,
-          h: 355,
+          w: 500,
+          h: 855,
           x: (width / 2) + 70,
           y: (height / 2) - 175,
         };
@@ -177,6 +185,7 @@ const Engine = ({
                 iconSrc={null}
                 key="DetailsPanel"
                 index={-1}
+                initialWindowType={0}
               > 
                 <DetailsWindow />
               </Window>, 
@@ -190,6 +199,7 @@ const Engine = ({
                 iconSrc={null}
                 key="SHOE-Project-Window"
                 index={-1}
+                initialWindowType={1}
               >
                 <SHOEProject />
               </Window>,
@@ -203,8 +213,9 @@ const Engine = ({
                 iconSrc={null}
                 key="MCS-Project-Window"
                 index={-1}
+                initialWindowType={1}
               > 
-              <MCSProject />
+                <MCSProject />
             </Window>,            
             <Window
               windowName="Landing"
@@ -216,6 +227,7 @@ const Engine = ({
               iconSrc={null}
               key="Landing"
               index={-1}
+              initialWindowType={0}
             >
               <p>hi</p>
             </Window>,
@@ -242,6 +254,7 @@ const Engine = ({
           getNewWindowPosition,
           setActiveWindowPosition,
           activeWindow,
+          activeObject,
           engineTransform: { w: width, h: height },
           //theme,
         }), [activeWindow, width, height])}

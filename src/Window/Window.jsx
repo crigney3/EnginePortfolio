@@ -15,6 +15,7 @@
     className,
     id,
     children,
+    initialWindowType
   }) => {
     const WindowControl = useContext(WindowControlContext);
   
@@ -35,6 +36,7 @@
   
     const windowRef = useRef(null);
     const titlebarRef = useRef(null);
+    const [windowType, setWindowType] = useState(initialWindowType);
   
     const normalizeTransform = (transformVal) => {
       const newTransform = { ...transformVal };
@@ -210,15 +212,21 @@
         transformRef.current = normalizeTransform(transformRef.current);
         setTransform(transformRef.current);
       };
+
+      const handleRightClickSelect = (event) => {
+        event.preventDefault();
+      }
   
       if (!isMobile) {
         windowRef.current.addEventListener('mousedown', handleWindowMouseDown);
         titlebarRef.current.addEventListener('mousedown', handleTitlebarMouseDown);
+        window.addEventListener('contextmenu', handleRightClickSelect);
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('mouseup', handleMouseUp);
       } else {
         windowRef.current.addEventListener('touchstart', handleWindowMouseDown);
         titlebarRef.current.addEventListener('touchstart', handleTitlebarMouseDown);
+        window.addEventListener('contextmenu', handleRightClickSelect);
         window.addEventListener('touchmove', handleMouseMove);
         window.addEventListener('touchend', handleMouseUp);
       }
@@ -229,11 +237,13 @@
         if (!isMobile) {
           if (windowRef.current) windowRef.current.removeEventListener('mousedown', handleWindowMouseDown);
           if (titlebarRef.current) titlebarRef.current.removeEventListener('mousedown', handleTitlebarMouseDown);
+          window.removeEventListener('contextmenu', handleRightClickSelect);
           window.removeEventListener('mousemove', handleMouseMove);
           window.removeEventListener('mouseup', handleMouseUp);
         } else {
           if (windowRef.current) windowRef.current.removeEventListener('touchstart', handleWindowMouseDown);
           if (titlebarRef.current) titlebarRef.current.removeEventListener('touchstart', handleTitlebarMouseDown);
+          window.removeEventListener('contextmenu', handleRightClickSelect);
           window.removeEventListener('touchmove', handleMouseMove);
           window.removeEventListener('touchend', handleMouseUp);
         }

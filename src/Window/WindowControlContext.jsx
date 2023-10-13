@@ -8,6 +8,7 @@ const WindowControlContext = createContext({
   getNewWindowPosition: () => {},
   setActiveWindowPosition: () => {},
   activeWindow: -1,
+  activeObject: -1,
   engineTransform: {},
   //theme: {},
 });

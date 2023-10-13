@@ -7,15 +7,24 @@
         "fontColor": "font-white",
         "video": {
             "src": "",
-            "name": ""
+            "name": "testVideoName"
         },
         "images": [
             {
-                "src": "",
+                "src": "/SHOvErview.png",
                 "name": "SHOE main screenshot"
             }
         ],
-        "coauthors": "",
+        "coauthors": [
+            {
+                "name": "Jacob Brosler",
+                "github": "Jacob-Brosler"
+            },
+            {
+                "name": "Beth Smith",
+                "github": "E-R-Smith"
+            }
+        ],
         "theme": "red"
       },
       {
@@ -45,7 +54,9 @@
                 "name": "streamermoment.png"
             }
         ],
-        "coauthors": "",
+        "coauthors": [
+
+        ],
         "theme": ""
       },
       {
@@ -67,7 +78,9 @@
                 "name": "LIDAR Active - Lit"
             }
         ],
-        "coauthors": "",
+        "coauthors": [
+
+        ],
         "theme": ""
       },
       {
@@ -89,7 +102,12 @@
                 "name": "What, you want more screenshots of the site you're already on?"
             }
         ],
-        "coauthors": "You, technically!",
+        "coauthors": [
+            {
+                "name": "You, technically!",
+                "github": "???"
+            }
+        ],
         "theme": ""
       }
     ]

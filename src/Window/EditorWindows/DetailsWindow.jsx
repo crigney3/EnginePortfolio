@@ -3,10 +3,13 @@ import React, {
 } from 'react';
 import propTypes from 'prop-types';
 import projectData from '../../data/ProjectData.json'
+import Select from 'react-select';
+import Creatable from 'react-select/creatable';
 
 const DetailsWindow = ({}) => {
 
     const [currentObject, setCurrentObject] = useState(null);
+    const currentObjectRef = useRef(null);
     const [titlesArray, setTitlesArray] = useState(["null"]);
     const [descriptionArray, setDescArray] = useState(["null"]);
     const [shortDescArray, setShortDescArray] = useState(["null"]);
@@ -15,10 +18,9 @@ const DetailsWindow = ({}) => {
     const [coauthorsArray, setCoauthorsArray] = useState(["null"]);
     const [videoArray, setVideoArray] = useState(["null"]);
 
-
     const getTitlesFromData = () => {
         const newTitlesArray = projectData["projects"].map((project) => {
-            return project["title"];
+            return { value: project["title"] };
         });
 
         setTitlesArray(newTitlesArray);
@@ -26,7 +28,7 @@ const DetailsWindow = ({}) => {
 
     const getDescriptionsFromData = () => {
         const newDescArray = projectData["projects"].map((project) => {
-            return project["description"];
+            return { value: project["description"] };
         });
 
         setDescArray(newDescArray);
@@ -34,7 +36,7 @@ const DetailsWindow = ({}) => {
 
     const getShortDescFromData = () => {
         const newShortDescArray = projectData["projects"].map((project) => {
-            return project["shortDescription"];
+            return { value: project["shortDescription"] };
         });
 
         setShortDescArray(newShortDescArray);
@@ -42,26 +44,30 @@ const DetailsWindow = ({}) => {
 
     const getThemeFromData = () => {
         const newThemeArray = projectData["projects"].map((project) => {
-            return project["theme"];
+            return { value: project["theme"]};
         });
 
         setThemeArray(newThemeArray);
     }
 
     const getImagesFromData = () => {
-        // This is terrifying and wrong, fix this
+        // hooray for array.flat()!
         const newImagesArray = projectData["projects"].map((project) => {
-            return project["images"].map((image) => {
-                return image;
+            let subImagesArray = project["images"].map((imageObj) => {
+                return { value: imageObj.name, label: imageObj.name, image: imageObj.src };
             });
+            
+            return subImagesArray;
         });
 
-        setImagesArray(newImagesArray);
+        const flattenedImagesArray = newImagesArray.flat();
+
+        setImagesArray(flattenedImagesArray);
     }
 
     const getVideoFromData = () => {
         const newVideoArray = projectData["projects"].map((project) => {
-            return project["video"];
+            return { value: project["video"].name, src: project["video"].src };
         });
 
         setVideoArray(newVideoArray);
@@ -69,10 +75,16 @@ const DetailsWindow = ({}) => {
 
     const getCoauthorsFromData = () => {
         const newCoauthorsArray = projectData["projects"].map((project) => {
-            return project["coauthors"];
+            let subCoauthorsArray = project["coauthors"].map((coauthorObj) => {
+                return { value: coauthorObj.name, github: coauthorObj.github };
+            })
+            
+            return subCoauthorsArray;
         });
 
-        setCoauthorsArray(newCoauthorsArray);
+        const flattenedCoauthorsArray = newCoauthorsArray.flat();
+
+        setCoauthorsArray(flattenedCoauthorsArray);
     }
 
     useMemo(() => { 
@@ -90,39 +102,105 @@ const DetailsWindow = ({}) => {
             <h1>Object Details</h1>
             <div className='EditingElements'>
                 <label>Current title:</label>
-                <select className='TitleDropdown' id="titles">
-                    {titlesArray.map( (titleData) => (titleData !== "") && <option key={titleData}>{titleData}</option>)}
-                </select>
+                <Select
+                    defaultValue={titlesArray[0]}
+                    className='titlesSelector'
+                    name='editorTitles'
+                    options={titlesArray}
+                    formatOptionLabel={titleObj => (
+                        (titleObj.value !== "") &&
+                        <div className="titleOption">
+                          <span>{titleObj.value}</span>
+                        </div>
+                    )}
+                />
                 <br></br>
                 <label>Current description:</label>
-                <select className="DescriptionDropdown" id="desc">
-                    {descriptionArray.map( (descData) => (descData !== "") && <option key={descData}>{descData}</option>)}
-                </select>
+                <Select
+                    defaultValue={descriptionArray[0]}
+                    className='descriptionSelector'
+                    name='editorTitles'
+                    options={descriptionArray}
+                    formatOptionLabel={descObj => (
+                        (descObj.value !== "") &&
+                        <div className="descOption">
+                          <span>{descObj.value}</span>
+                        </div>
+                    )}
+                />
                 <br></br>
                 <label>Current short description:</label>
-                <select className="ShortDescriptionDropdown" id="shortDesc">
-                    {shortDescArray.map( (shortDescData) => (shortDescData !== "") && <option key={shortDescData}>{shortDescData}</option>)}
-                </select>
+                <Select
+                    defaultValue={shortDescArray[0]}
+                    className='shortDescSelector'
+                    name='editorTitles'
+                    options={shortDescArray}
+                    formatOptionLabel={shortDescObj => (
+                        (shortDescObj.value !== "") &&
+                        <div className="shortDescOption">
+                          <span>{shortDescObj.value}</span>
+                        </div>
+                    )}
+                />
                 <br></br>
                 <label>Current theme:</label>
-                <select className="ThemeDropdown" id="theme">
-                    {themeArray.map( (themeData) => (themeData !== "") && <option key={themeData}>{themeData}</option>)}
-                </select>
+                <Select
+                    defaultValue={themeArray[0]}
+                    className='themeSelector'
+                    name='editorTitles'
+                    options={themeArray}
+                    formatOptionLabel={themeObj => (
+                        (themeObj.value !== "") &&
+                        <div className="themeOption">
+                          <span>{themeObj.value}</span>
+                        </div>
+                    )}
+                />
                 <br></br>
                 <label>Current image:</label>
-                <select className="ImagesDropdown" id="imageDrop">
-                    {imagesArray.map( (imagesData) => (imagesData.name !== "") && <option key={imagesData.name}>{imagesData.name}</option>)}
-                </select>
+                <Select 
+                    defaultValue={imagesArray[0]}
+                    name="editorImages"
+                    className='imagesSelector'
+                    options={imagesArray}
+                    formatOptionLabel={imageObj => (
+                      (imageObj.value !== "") &&
+                      <div className="imageOption">
+                        <img src={imageObj.image} alt={imageObj.value} />
+                        <span>{imageObj.value}</span>
+                      </div>
+                    )}
+                />
                 <br></br>
                 <label>Current video:</label>
-                <select className="VideoDropdown" id="videoDrop">
-                    {videoArray.map( (videoData) => (videoData.name !== "") && <option key={videoData.name}>{videoData.name}</option>)}
-                </select>
+                <Select
+                    defaultValue={videoArray[0]}
+                    className='videoSelector'
+                    name='editorTitles'
+                    options={videoArray}
+                    formatOptionLabel={videoObj => (
+                        (videoObj.value !== "") &&
+                        <div className="videoOption">
+                          <span>{videoObj.value}</span>
+                        </div>
+                    )}
+                />
                 <br></br>
                 <label>Listed Coauthors:</label>
-                <select className="CoauthorsDropdown" id="coauthorsDrop">
-                    {coauthorsArray.map( (coauthData) => (coauthData !== "") && <option key={coauthData}>{coauthData}</option>)}
-                </select>
+                <Select 
+                    defaultValue={coauthorsArray[0]}
+                    isMulti
+                    name="editorCoauthors"
+                    options={coauthorsArray}
+                    className='coauthorsSelector'
+                    formatOptionLabel={coAuthObj => (
+                      (coAuthObj.value !== "") &&
+                      <div className="coauthOption">
+                        <span>{coAuthObj.value}</span>
+                        <a href={"https://github.com/" + coAuthObj.github}>{coAuthObj.github}</a>
+                      </div>
+                    )}
+                />
             </div>
         </div>
     );
