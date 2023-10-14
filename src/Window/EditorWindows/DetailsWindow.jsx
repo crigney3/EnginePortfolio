@@ -5,11 +5,16 @@ import propTypes from 'prop-types';
 import projectData from '../../data/ProjectData.json'
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
+import WindowControlContext from '../WindowControlContext';
 
-const DetailsWindow = ({}) => {
+const DetailsWindow = ({
+    initialActiveObject
+}) => {
 
-    const [currentObject, setCurrentObject] = useState(null);
-    const currentObjectRef = useRef(null);
+    const windowContext = useContext(WindowControlContext);
+
+    // const [currentObject, setCurrentObject] = useState(initialActiveObject);
+    // const currentObjectRef = useRef(currentObject);
     const [titlesArray, setTitlesArray] = useState(["null"]);
     const [descriptionArray, setDescArray] = useState(["null"]);
     const [shortDescArray, setShortDescArray] = useState(["null"]);
@@ -19,8 +24,20 @@ const DetailsWindow = ({}) => {
     const [videoArray, setVideoArray] = useState(["null"]);
 
     const [currentTitle, setCurrentTitle] = useState(null);
+    const [currentDescription, setCurrentDescription] = useState(null);
+    const [currentShortDesc, setCurrentShortDesc] = useState(null);
+    const [currentTheme, setCurrentTheme] = useState(null);
+    const [currentImage, setCurrentImage] = useState(null);
+    const [currentCoauthor, setCurrentCoauthor] = useState(null);
+    const [currentVideo, setCurrentVideo] = useState(null);
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isTitleLoading, setIsTitleLoading] = useState(false);
+    const [isDescLoading, setIsDescLoading] = useState(false);
+    const [isShortDescLoading, setIsShortDescLoading] = useState(false);
+    const [isThemeLoading, setIsThemeLoading] = useState(false);
+    const [isImagesLoading, setIsImageLoading] = useState(false);
+    const [isCoauthLoading, setIsCoauthLoading] = useState(false);
+    const [isVideoLoading, setIsVideoLoading] = useState(false);
 
     const getTitlesFromData = () => {
         const newTitlesArray = projectData["projects"].map((project) => {
@@ -29,6 +46,7 @@ const DetailsWindow = ({}) => {
 
         setTitlesArray(newTitlesArray);
         setCurrentTitle(newTitlesArray[0]);
+        
     }
 
     const getDescriptionsFromData = () => {
@@ -98,12 +116,74 @@ const DetailsWindow = ({}) => {
       });
 
     const handleTitleCreate = (inputValue) => {
-        setIsLoading(true);
+        setIsTitleLoading(true);
         setTimeout(() => {
             const newOption = createTextOnlyOption(inputValue);
-            setIsLoading(false);
+            setIsTitleLoading(false);
             setTitlesArray((prev) => [...prev, newOption]);
             setCurrentTitle(newOption);
+        }, 1000);
+    }
+
+    const handleDescriptionCreate = (inputValue) => {
+        setIsDescLoading(true);
+        setTimeout(() => {
+            const newOption = createTextOnlyOption(inputValue);
+            setIsDescLoading(false);
+            setDescArray((prev) => [...prev, newOption]);
+            setCurrentDescription(newOption);
+        }, 1000);
+    }
+
+    const handleShortDescriptionCreate = (inputValue) => {
+        setIsShortDescLoading(true);
+        setTimeout(() => {
+            const newOption = createTextOnlyOption(inputValue);
+            setIsShortDescLoading(false);
+            setShortDescArray((prev) => [...prev, newOption]);
+            setCurrentShortDesc(newOption);
+        }, 1000);
+    }
+
+    const handleThemeCreate = (inputValue) => {
+        setIsThemeLoading(true);
+        setTimeout(() => {
+            const newOption = createTextOnlyOption(inputValue);
+            setIsThemeLoading(false);
+            setThemeArray((prev) => [...prev, newOption]);
+            setCurrentTheme(newOption);
+        }, 1000);
+    }
+
+    const handleImageCreate = (inputValue) => {
+        setIsImageLoading(true);
+        setTimeout(() => {
+            // TODO: make option creator for images? Or make these not creatable
+            const newOption = createTextOnlyOption(inputValue);
+            setIsImagesLoading(false);
+            setImageArray((prev) => [...prev, newOption]);
+            setCurrentImage(newOption);
+        }, 1000);
+    }
+
+    const handleVideoCreate = (inputValue) => {
+        setIsVideoLoading(true);
+        setTimeout(() => {
+            const newOption = createTextOnlyOption(inputValue);
+            setIsVideoLoading(false);
+            setVideoArray((prev) => [...prev, newOption]);
+            setCurrentVideo(newOption);
+        }, 1000);
+    }
+
+    const handleCoauthoCreate = (inputValue) => {
+        setIsCoauthLoading(true);
+        setTimeout(() => {
+            // TODO: make option creator for coauth? Or make these not creatable
+            const newOption = createTextOnlyOption(inputValue);
+            setIsCoauthLoading(false);
+            setCoauthArray((prev) => [...prev, newOption]);
+            setCurrentCoauth(newOption);
         }, 1000);
     }
 
@@ -120,6 +200,7 @@ const DetailsWindow = ({}) => {
     return (
         <div className="DetailsPanel">
             <h1>Object Details</h1>
+            <span>{windowContext.activeObject}</span>
             <div className='EditingElements'>
                 <label>Current title:</label>
                 <CreatableSelect
@@ -128,8 +209,8 @@ const DetailsWindow = ({}) => {
                     className='titlesSelector'
                     name='editorTitles'
                     options={titlesArray}
-                    isDisabled={isLoading}
-                    isLoading={isLoading}
+                    isDisabled={isTitleLoading}
+                    isLoading={isTitleLoading}
                     onCreateOption={handleTitleCreate}
                     value={currentTitle}
                     onChange={(newValue) => setCurrentTitle(newValue)}
@@ -142,11 +223,17 @@ const DetailsWindow = ({}) => {
                 />
                 <br></br>
                 <label>Current description:</label>
-                <Select
+                <CreatableSelect
+                    isClearable
                     defaultValue={descriptionArray[0]}
                     className='descriptionSelector'
-                    name='editorTitles'
+                    name='editorDescs'
                     options={descriptionArray}
+                    isDisabled={isDescLoading}
+                    isLoading={isDescLoading}
+                    onCreateOption={handleDescriptionCreate}
+                    value={currentDescription}
+                    onChange={(newValue) => setCurrentDescription(newValue)}
                     formatOptionLabel={descObj => (
                         (descObj.value !== "") &&
                         <div className="descOption">
@@ -156,11 +243,16 @@ const DetailsWindow = ({}) => {
                 />
                 <br></br>
                 <label>Current short description:</label>
-                <Select
+                <CreatableSelect
+                    isClearable
                     defaultValue={shortDescArray[0]}
                     className='shortDescSelector'
-                    name='editorTitles'
+                    name='editorShortDesc'
+                    isDisabled={isShortDescLoading}
+                    isLoading={isShortDescLoading}
+                    onCreateOption={handleShortDescriptionCreate}
                     options={shortDescArray}
+                    onChange={(newValue) => setCurrentShortDescription(newValue)}
                     formatOptionLabel={shortDescObj => (
                         (shortDescObj.value !== "") &&
                         <div className="shortDescOption">

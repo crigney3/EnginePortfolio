@@ -85,6 +85,7 @@
       };
   
       const handleWindowMouseDown = (e) => {
+        // TODO: need to make a similar thing for selecting an active object
         WindowControl.handleFocus(id, windowRef);
         const event = 'targetTouches' in e ? e.targetTouches[0] : e;
         if (event.target !== event.currentTarget) return;
@@ -213,14 +214,19 @@
         setTransform(transformRef.current);
       };
 
-      const handleRightClickSelect = (event) => {
-        event.preventDefault();
+      const handleRightClickSelect = (e) => {
+        if (!('targetTouches' in e) && windowType == 1) {
+          e.preventDefault();
+          WindowControl.handleActiveObjectSelection(id, windowRef);
+        }
+
+        
       }
   
       if (!isMobile) {
         windowRef.current.addEventListener('mousedown', handleWindowMouseDown);
         titlebarRef.current.addEventListener('mousedown', handleTitlebarMouseDown);
-        window.addEventListener('contextmenu', handleRightClickSelect);
+        windowRef.current.addEventListener('contextmenu', handleRightClickSelect);
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('mouseup', handleMouseUp);
       } else {
@@ -296,6 +302,7 @@
     className: propTypes.string,
     id: propTypes.string,
     children: propTypes.node,
+    initialWindowType: propTypes.number
   };
   
   Window.defaultProps = {
@@ -307,6 +314,7 @@
     className: '',
     id: '',
     children: null,
+    initialWindowType: 0
   };
   
   export default Window;

@@ -7,6 +7,7 @@ const WindowControlContext = createContext({
   getZIndex: () => {},
   getNewWindowPosition: () => {},
   setActiveWindowPosition: () => {},
+  handleActiveObjectSelection: () => {},
   activeWindow: -1,
   activeObject: -1,
   engineTransform: {},

@@ -97,6 +97,18 @@ const Engine = ({
         };
     };
 
+    const handleActiveObjectSelection = (windowKey) => {
+      const windowIndex = openWindowsRef.current
+        .findIndex((window) => window.props.id === windowKey);
+
+      if (windowIndex !== -1) {
+        setActiveObject(windowIndex);
+        return;
+      }
+
+      setActiveObject(windowIndex);
+    }
+
     // useEffect is a hook that triggers after a rerender.
     // This arrow function handles ordering the windows on each rerender.
     useEffect(() => {
@@ -253,6 +265,7 @@ const Engine = ({
           getZIndex,
           getNewWindowPosition,
           setActiveWindowPosition,
+          handleActiveObjectSelection,
           activeWindow,
           activeObject,
           engineTransform: { w: width, h: height },
